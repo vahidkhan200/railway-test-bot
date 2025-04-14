@@ -1,4 +1,4 @@
-fastapi
-uvicorn
-setuptools
-wheel
+requests==2.31.0
+pandas==2.2.0
+pandas-ta==0.3.14b0
+python-telegram-bot==13.7
