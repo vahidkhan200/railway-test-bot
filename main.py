@@ -1,7 +1,6 @@
-import requests
-
-url = "https://api.lbank.info/v2/ticker.do?symbol=btc_usdt"
-res = requests.get(url)
-data = res.json()
-
-print("Raw response:", data)
+if 'ticker' in data:
+    price = data['ticker']['latest']
+    print("BTC/USDT:", price)
+else:
+    print("No ticker found. Full response:")
+    print(data)
