@@ -1,6 +1,13 @@
-if 'ticker' in data:
-    price = data['ticker']['latest']
-    print("BTC/USDT:", price)
-else:
-    print("No ticker found. Full response:")
-    print(data)
+import requests
+
+url = "https://api.lbank.info/v2/ticker.do?symbol=btc_usdt"
+response = requests.get(url)
+
+print("Status Code:", response.status_code)
+
+try:
+    data = response.json()
+    print("Raw JSON:", data)
+except Exception as e:
+    print("JSON parsing error:", e)
+    print("Raw text:", response.text)
