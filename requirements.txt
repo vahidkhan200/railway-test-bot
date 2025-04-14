@@ -1,7 +1,5 @@
 pandas
 requests
-python-telegram-bot==20.3
-pandas-ta
-apscheduler
-setuptools
+python-telegram-bot==13.15
 numpy==1.23.5
+git+https://github.com/twopirllc/pandas-ta.git
