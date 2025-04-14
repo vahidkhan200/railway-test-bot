@@ -12,7 +12,7 @@ List of symbols to track
 
 SYMBOLS = ['btc_usdt', 'eth_usdt', 'sol_usdt', 'xrp_usdt', 'not_usdt', 'xlm_usdt', 'xdc_usdt', 'grs_usdt', 'bnb_usdt']
 
-bot = Bot(token=TELEGRAM_TOKEN)
+bot = Bot(token=7808088088:AAGu9D1Vr5Iq6lrrE7P2jbMr32_-K6Y8wF4)
 
 def fetch_lbank_data(symbol): url = f"https://api.lbkex.com/v2/ticker/24hr.do?symbol={symbol}" response = requests.get(url) data = response.json()['ticker'] return float(data['latest'])
 
