@@ -1,5 +1,6 @@
 import requests
-from telegram.ext import Updater, CommandHandler
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 TOKEN = '7808088088:AAGu9D1Vr5Iq6lrrE7P2jbMr32_-K6Y8wF4'
 
@@ -17,21 +18,20 @@ def get_prices():
             price = res['data'][0]['ticker']['latest']
             result.append(f"{symbol.upper()}: {price}")
         except:
-            result.append(f"{symbol.upper()}: خطا در دریافت")
+            result.append(f"{symbol.upper()}: خطا")
     return "\n".join(result)
 
-def start(update, context):
-    update.message.reply_text("سلام! برای دریافت قیمت‌ها دستور /price رو بفرست.")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("سلام! دستور /price رو بزن تا قیمت‌ها رو ببینی.")
 
-def price(update, context):
+async def price(update: Update, context: ContextTypes.DEFAULT_TYPE):
     prices = get_prices()
-    update.message.reply_text(prices)
+    await update.message.reply_text(prices)
 
-updater = Updater(TOKEN, use_context=True)
-dp = updater.dispatcher
+if __name__ == '__main__':
+    app = ApplicationBuilder().token(TOKEN).build()
 
-dp.add_handler(CommandHandler("start", start))
-dp.add_handler(CommandHandler("price", price))
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("price", price))
 
-updater.start_polling()
-updater.idle()
+    app.run_polling()
