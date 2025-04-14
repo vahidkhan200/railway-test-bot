@@ -4,3 +4,4 @@ python-telegram-bot==20.3
 pandas-ta
 apscheduler
 setuptools
+numpy==1.23.5
