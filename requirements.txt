@@ -4,4 +4,4 @@ ta
 pandas
 numpy
 requests
-pip install pandas ta
+pandas ta
