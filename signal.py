@@ -25,27 +25,3 @@ def generate_signal(df):
     atr_value = last['atr']
 
     return signal, reason, atr_value
-def is_strong_buy_signal(df):
-    latest = df.iloc[-1]
-    prev = df.iloc[-2]
-
-    conditions = [
-        latest['RSI'] < 30,
-        latest['MACD'] > latest['MACD_signal'] and prev['MACD'] <= prev['MACD_signal'],
-        latest['close'] > latest['EMA_20'],
-        latest['close'] < latest['resistance'] * 1.01,
-        latest['candle_pattern'] in ['hammer', 'bullish_engulfing'],
-    ]
-
-    return sum(conditions) >= 3  # حداقل ۳ شرط برقرار باشه
-
-
-def is_strong_sell_signal(df):
-    latest = df.iloc[-1]
-    prev = df.iloc[-2]
-
-    conditions = [
-        latest['RSI'] > 70,
-        latest['MACD'] < latest['MACD_signal'] and prev['MACD'] >= prev['MACD_signal'],
-        latest['close'] < latest['EMA_20'],
-        latest['close'] > latest['support']
