@@ -7,3 +7,4 @@ requests
 pandas
 ta
 schedule
+python-dotenv
