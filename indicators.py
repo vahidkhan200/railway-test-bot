@@ -1,28 +1,28 @@
 import pandas as pd
-import ta
 
-def add_indicators(klines):
-    df = pd.DataFrame(klines)
-    df['timestamp'] = pd.to_datetime(df['timestamp'])
-    df.set_index('timestamp', inplace=True)
+def calculate_macd(df):
+    df['ema12'] = df['close'].ewm(span=12, adjust=False).mean()
+    df['ema26'] = df['close'].ewm(span=26, adjust=False).mean()
+    df['macd'] = df['ema12'] - df['ema26']
+    df['signal'] = df['macd'].ewm(span=9, adjust=False).mean()
+    return df
 
-    # EMA
-    df['EMA_20'] = ta.trend.ema_indicator(df['close'], window=20).ema_indicator()
+def calculate_rsi(df, period=14):
+    delta = df['close'].diff()
+    gain = delta.clip(lower=0)
+    loss = -1 * delta.clip(upper=0)
 
-    # RSI
-    df['RSI'] = ta.momentum.RSIIndicator(df['close'], window=14).rsi()
+    avg_gain = gain.rolling(window=period).mean()
+    avg_loss = loss.rolling(window=period).mean()
 
-    # MACD
-    macd = ta.trend.MACD(df['close'])
-    df['MACD'] = macd.macd()
-    df['MACD_signal'] = macd.macd_signal()
+    rs = avg_gain / avg_loss
+    df['rsi'] = 100 - (100 / (1 + rs))
+    return df
 
-    # ATR
-    df['ATR'] = ta.volatility.AverageTrueRange(
-        high=df['high'],
-        low=df['low'],
-        close=df['close'],
-        window=14
-    ).average_true_range()
-
+def calculate_atr(df, period=14):
+    df['H-L'] = df['high'] - df['low']
+    df['H-PC'] = abs(df['high'] - df['close'].shift())
+    df['L-PC'] = abs(df['low'] - df['close'].shift())
+    df['TR'] = df[['H-L', 'H-PC', 'L-PC']].max(axis=1)
+    df['atr'] = df['TR'].rolling(window=period).mean()
     return df
