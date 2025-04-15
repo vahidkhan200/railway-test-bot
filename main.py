@@ -3,7 +3,7 @@ import ccxt
 import telebot
 import logging
 from analysis import analyze
-from config import TELEGRAM_TOKEN, CHAT_ID
+from config import 7808088088:AAGu9D1Vr5Iq6lrrE7P2jbMr32_-K6Y8wF4, 392018191
 
 # تنظیمات لاگینگ
 logging.basicConfig(level=logging.INFO)
